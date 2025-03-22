@@ -1,25 +1,29 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import WelcomeView from '../views/WelcomeView.vue'
 import ChatRoomView from '../views/ChatRoomView.vue'
-import { projectAuth } from '@/firebase/config'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+
+const auth = getAuth()
 
 //auth guards
 const requireAuth = (to, from, next) => {
-  let user = projectAuth.currentUser
-  if (!user) {
-    next({ name: 'welcome' })
-  } else {
-    next()
-  }
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      next({ name: 'welcome' })
+    } else {
+      next()
+    }
+  })
 }
 
 const requireNoAuth = (to, from, next) => {
-  let user = projectAuth.currentUser
-  if (user) {
-    next({ name: 'chatroom' })
-  } else {
-    next()
-  }
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      next({ name: 'chatroom' })
+    } else {
+      next()
+    }
+  })
 }
 
 const router = createRouter({

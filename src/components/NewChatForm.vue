@@ -20,7 +20,7 @@ import useCollection from '@/composables/useCollection'
 
 const message = ref('')
 const { user } = getUser()
-const { addDoc, error } = useCollection('chats')
+const { addDocument, error } = useCollection('chats')
 
 const handleChat = async () => {
   const chat = {
@@ -29,7 +29,7 @@ const handleChat = async () => {
     createdAt: timestamp(),
   }
 
-  await addDoc(chat)
+  await addDocument(chat)
 
   if (!error.value) {
     message.value = ''

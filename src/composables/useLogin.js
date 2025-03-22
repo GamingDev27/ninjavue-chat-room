@@ -1,5 +1,6 @@
 import { ref } from 'vue';
 import { projectAuth } from '../firebase/config';
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const error = ref(null);
 
@@ -7,7 +8,7 @@ const login = async (email, password) => {
     error.value = null;
 
     try {
-        const response = await projectAuth.signInWithEmailAndPassword(email, password);
+        const response = await signInWithEmailAndPassword(projectAuth, email, password);
         if(!response){
             throw new Error('Could not complete the login');
         }

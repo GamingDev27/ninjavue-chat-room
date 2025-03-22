@@ -1,10 +1,11 @@
 import { ref } from 'vue';
 import { projectAuth } from '../firebase/config';
+import { onAuthStateChanged } from "firebase/auth";
 
 const user = ref(projectAuth.currentUser);
 //const error = ref(null);
 
-projectAuth.onAuthStateChanged(_user => {
+onAuthStateChanged(projectAuth, (_user) => {
     console.log('User is logged in: ', user);
     user.value = _user;
     

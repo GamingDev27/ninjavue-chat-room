@@ -6,10 +6,11 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
 import {projectAuth} from './firebase/config'
+import { onAuthStateChanged } from "firebase/auth";
 
 let app 
 
-projectAuth.onAuthStateChanged(() => {
+onAuthStateChanged(projectAuth,() => {
     if(!app){
         app = createApp(App)
         app.use(createPinia())
